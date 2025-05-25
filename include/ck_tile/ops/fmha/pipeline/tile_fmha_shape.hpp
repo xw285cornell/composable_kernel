@@ -13,6 +13,8 @@ static CK_TILE_HOST_DEVICE constexpr index_t ceil_to_qualified_tile_length(index
         return 128;
     if(len == 160)
         return 256;
+    if(len == 192)
+        return 192;
 
     // only length of 96, 160 and power-of-two is supported
     if(!(len & (len - 1)))
@@ -42,8 +44,6 @@ struct TileFmhaShape
     static_assert(NumGemm1Warps % NumGemm0Warps == 0);
 
     static constexpr index_t NumWarps = max(NumGemm0Warps, NumGemm1Warps);
-
-    static_assert(std::is_same_v<Gemm0WarpTile, Gemm1WarpTile>);
 
     static constexpr index_t kM0 = BlockTile::at(number<0>{}); // tile size along q seqlen
     static constexpr index_t kN0 = BlockTile::at(number<1>{}); // tile size along k seqlen

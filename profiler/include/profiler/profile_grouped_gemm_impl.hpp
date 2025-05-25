@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2018-2024, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright (c) 2018-2025, Advanced Micro Devices, Inc. All rights reserved.
 
 #pragma once
 
 #include <iomanip>
 
 #include "ck/ck.hpp"
+#include "ck/utility/env.hpp"
 #include "ck/tensor_operation/gpu/device/tensor_layout.hpp"
 #include "ck/tensor_operation/gpu/device/device_grouped_gemm.hpp"
 #include "ck/tensor_operation/gpu/device/device_grouped_gemm_splitk.hpp"
@@ -77,7 +78,7 @@ bool profile_grouped_gemm_impl(int do_verification,
     std::vector<Tensor<CDataType>> c_m_n_host_results;
     std::vector<Tensor<CDataType>> c_m_n_device_results;
 
-    ComputeDataType max_abs_in_val = 0.f;
+    double max_abs_in_val = 0.f;
     for(std::size_t i = 0; i < group_count; i++)
     {
         a_m_k.push_back(
